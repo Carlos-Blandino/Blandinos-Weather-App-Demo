@@ -24,17 +24,18 @@ class ViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         whiteBackgroundView.layer.cornerRadius = 15
-     
+        
         // Do any additional setup after loading the view.
-     
+        
         searchTextField.delegate = self
-
+        
     }
     
     @IBAction func locationSearchButtonTapped(_ sender: UIButton) {
+        
         searchTextField.endEditing(true)
-               //textFieldShouldReturn(searchTextField)
-               print("search button pressed")
+        
+        print("search button pressed")
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -47,31 +48,32 @@ class ViewController: UIViewController, UITextFieldDelegate {
     }
     
     func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
-         // checking to see if field is valid and puts away the keyboard if so
-               if textField.text != "" {
-                   // put away the keyboard
-                   return true
-               } else {
-                   textField.placeholder = "Type something"
-                   // don't put away the keyboard
-                   return false
-               }
+        // checking to see if field is valid and puts away the keyboard if so
+        if textField.text != "" {
+            // put away the keyboard
+            return true
+        } else {
+            textField.placeholder = "Type something"
+            // don't put away the keyboard
+            return false
+        }
     }
     
     func textFieldDidEndEditing(_ textField: UITextField, reason: UITextField.DidEndEditingReason) {
         // Good place to use what was typed in text field
-            // At this point we can reset the text field
+        // At this point we can reset the text field
+        
+        if let city = searchTextField.text {
+            weatherManager.getWeather(cityName: city)
             
-            if let city = searchTextField.text {
-                weatherManager.getWeather(cityName: city)
-                print(city , " in weather vc")
-            }
-            
-            searchTextField.text = ""
         }
         
+        searchTextField.text = ""
+    }
+    
     
     @IBAction func locationButtonTapped(_ sender: UIButton) {
+        
         
     }
     
