@@ -9,7 +9,8 @@
 import UIKit
 
 class ViewController: UIViewController, UITextFieldDelegate {
-
+    @IBOutlet weak var backgroundView: UIImageView!
+    
     @IBOutlet weak var weatherImage: UIImageView!
     @IBOutlet weak var tempLabel: UILabel!
     @IBOutlet weak var tempTypeLabel: UILabel!
@@ -17,12 +18,19 @@ class ViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var searchTextField: UITextField!
     let weatherManager = WeatherManager()
     
+    @IBOutlet weak var whiteBackgroundView: UIView!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        searchTextField.delegate = self
+        whiteBackgroundView.layer.cornerRadius = 15
+     
         // Do any additional setup after loading the view.
-    }
+     
+        searchTextField.delegate = self
 
+    }
+    
     @IBAction func locationSearchButtonTapped(_ sender: UIButton) {
         searchTextField.endEditing(true)
                //textFieldShouldReturn(searchTextField)
