@@ -61,13 +61,11 @@ struct WeatherManager {
         } else {
             print("something is wrong with url")
         }
-        
     }
     
     func parseJSON(_ data: Data) -> WeatherModel? {
         let decoder = JSONDecoder()
         do {
-            
           let decodedData =  try decoder.decode(WeatherData.self, from: data)
             let id = decodedData.weather[0].id
             let temp = decodedData.main.temp
@@ -76,15 +74,11 @@ struct WeatherManager {
             let description = decodedData.weather.description
             let weather = WeatherModel(idOfCondition: id, nameOfCity: name, description: description, temp: temp)
             return weather
-            
         } catch {
             print(error)
             return nil
         }
-        
-        
     }
-
 }
 
 

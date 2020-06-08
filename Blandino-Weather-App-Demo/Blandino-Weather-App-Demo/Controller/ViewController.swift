@@ -11,16 +11,13 @@ import UIKit
 class ViewController: UIViewController, UITextFieldDelegate, WeatherManagerDelegate {
   
     @IBOutlet weak var backgroundView: UIImageView!
-    
     @IBOutlet weak var weatherImage: UIImageView!
     @IBOutlet weak var tempLabel: UILabel!
     @IBOutlet weak var tempTypeLabel: UILabel!
     @IBOutlet weak var locationLabel: UILabel!
     @IBOutlet weak var searchTextField: UITextField!
-    var weatherManager = WeatherManager()
-    
     @IBOutlet weak var whiteBackgroundView: UIView!
-    
+    var weatherManager = WeatherManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,11 +29,16 @@ class ViewController: UIViewController, UITextFieldDelegate, WeatherManagerDeleg
         searchTextField.delegate = self
         
     }
-    
     @IBAction func locationSearchButtonTapped(_ sender: UIButton) {
         searchTextField.endEditing(true)
     }
     
+    @IBAction func locationButtonTapped(_ sender: UIButton) {
+        
+    
+    }
+//MARK: - UITextFieldDelegate
+
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         // need to end editing when user pressed enter and triggers:
         // 1. should end editing to get called first
@@ -64,17 +66,12 @@ class ViewController: UIViewController, UITextFieldDelegate, WeatherManagerDeleg
         
         if let city = searchTextField.text {
             weatherManager.getWeather(cityName: city)
-            
         }
-        
         searchTextField.text = ""
     }
+
     
-    
-    @IBAction func locationButtonTapped(_ sender: UIButton) {
-        
-        
-    }
+//MARK: - WeatherManagerDelegate
     // background operation
     func didUpdateWeather(_ weatherManager: WeatherManager, weather: WeatherModel) {
         //waiting for data
@@ -83,16 +80,18 @@ class ViewController: UIViewController, UITextFieldDelegate, WeatherManagerDeleg
             self.locationLabel.text = weather.nameOfCity
             self.tempLabel.text = weather.tempStr
             
-            //seting up and utilizing images from the openweather.org
-            
-            let url = URL(string: weather.imageOfCondition)!
-            let data = try? Data(contentsOf: url)
-            let image = UIImage(data: data!)
-            self.weatherImage.image = image
+            //seting up and utilizing external images from the openweather.org
+            self.weatherImage.load(with: weather.imageName)
         }
-  
-    } 
-      
+    }
 }
 
-
+//MARK: - extensions
+extension UIImageView {
+    func load(with url: String) {
+        let url = URL(string: url)!
+        let data = try? Data(contentsOf: url)
+        let image = UIImage(data: data!)
+        self.image = image
+    }
+}
