@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		07505267248D8D0C0090CE2B /* WeatherData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07505266248D8D0C0090CE2B /* WeatherData.swift */; };
+		07505269248DDFC40090CE2B /* WeatherModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07505268248DDFC40090CE2B /* WeatherModel.swift */; };
 		07850850248869CD0048FBE5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0785084F248869CD0048FBE5 /* AppDelegate.swift */; };
 		07850852248869CD0048FBE5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07850851248869CD0048FBE5 /* SceneDelegate.swift */; };
 		07850854248869CD0048FBE5 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07850853248869CD0048FBE5 /* ViewController.swift */; };
@@ -19,6 +20,7 @@
 
 /* Begin PBXFileReference section */
 		07505266248D8D0C0090CE2B /* WeatherData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherData.swift; sourceTree = "<group>"; };
+		07505268248DDFC40090CE2B /* WeatherModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherModel.swift; sourceTree = "<group>"; };
 		0785084C248869CD0048FBE5 /* Blandino-Weather-App-Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Blandino-Weather-App-Demo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0785084F248869CD0048FBE5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		07850851248869CD0048FBE5 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -93,6 +95,7 @@
 			children = (
 				07A48602248C3F2400D6BE42 /* WeatherManager.swift */,
 				07505266248D8D0C0090CE2B /* WeatherData.swift */,
+				07505268248DDFC40090CE2B /* WeatherModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -172,6 +175,7 @@
 				07505267248D8D0C0090CE2B /* WeatherData.swift in Sources */,
 				07850850248869CD0048FBE5 /* AppDelegate.swift in Sources */,
 				07A48603248C3F2400D6BE42 /* WeatherManager.swift in Sources */,
+				07505269248DDFC40090CE2B /* WeatherModel.swift in Sources */,
 				07850852248869CD0048FBE5 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
