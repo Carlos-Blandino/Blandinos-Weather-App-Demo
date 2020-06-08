@@ -7,17 +7,23 @@
 //
 import UIKit
 
+protocol WeatherManagerDelegate {
+    func didUpdateWeather(_ weatherManager: WeatherManager , weather: WeatherModel)
+}
+
 struct WeatherManager {
     //make to use https and not http, App Transport Security policy requires the use
     //of a secure connection
     let url = "https://api.openweathermap.org/data/2.5/weather?appid=123fa8b368bed69d605b5d9bb748800e&units=imperial&q="
     
+    var delegate: WeatherManagerDelegate?
+    
     func getWeather(cityName: String) {
         let weatherUrl = "\(url)\(cityName)"
-        performRequest(urlString: weatherUrl)
+        performRequest(with: weatherUrl)
     }
     
-    func performRequest(urlString: String) {
+    func performRequest(with urlString: String) {
      
         let urlString = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
         // Create URL
@@ -40,7 +46,8 @@ struct WeatherManager {
                     return
                 }
                 if let safeData = data {
-                    self.parseJSON(data: safeData)
+                   let weather = self.parseJSON(data: safeData)
+                    self.delegate?.didUpdateWeather(self, weather: weather!)
                 }
             }
             // start task
@@ -51,7 +58,7 @@ struct WeatherManager {
         
     }
     
-    func parseJSON(data: Data) {
+    func parseJSON(data: Data) -> WeatherModel? {
         let decoder = JSONDecoder()
         do {
             
@@ -59,16 +66,20 @@ struct WeatherManager {
             let id = decodedData.weather[0].id
             let temp = decodedData.main.temp
             let name = decodedData.name
+            let image = decodedData.weather[0].icon
             let description = decodedData.weather.description
             let weather = WeatherModel(idOfCondition: id, nameOfCity: name, description: description, temp: temp)
-            print(weather.tempStr)
+            return weather
             
         } catch {
             
             print(error)
+            return nil
         }
         
         
     }
 
 }
+
+

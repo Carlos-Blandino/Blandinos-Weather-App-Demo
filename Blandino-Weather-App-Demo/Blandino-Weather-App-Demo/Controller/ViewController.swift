@@ -8,7 +8,8 @@
 
 import UIKit
 
-class ViewController: UIViewController, UITextFieldDelegate {
+class ViewController: UIViewController, UITextFieldDelegate, WeatherManagerDelegate {
+  
     @IBOutlet weak var backgroundView: UIImageView!
     
     @IBOutlet weak var weatherImage: UIImageView!
@@ -16,7 +17,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var tempTypeLabel: UILabel!
     @IBOutlet weak var locationLabel: UILabel!
     @IBOutlet weak var searchTextField: UITextField!
-    let weatherManager = WeatherManager()
+    var weatherManager = WeatherManager()
     
     @IBOutlet weak var whiteBackgroundView: UIView!
     
@@ -24,7 +25,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         whiteBackgroundView.layer.cornerRadius = 15
-        
+        weatherManager.delegate = self
         // Do any additional setup after loading the view.
         
         searchTextField.delegate = self
@@ -76,9 +77,27 @@ class ViewController: UIViewController, UITextFieldDelegate {
         
         
     }
-    
+    // background operation
+    func didUpdateWeather(_ weatherManager: WeatherManager, weather: WeatherModel) {
+        print( weather.nameOfCity)
+        print(weather.tempStr)
+    } 
+      
     
     
     
 }
 
+//extension UIImageView {
+//    func load(url: URL) {
+//        DispatchQueue.global().async { [weak self] in
+//            if let data = try? Data(contentsOf: url) {
+//                if let image = UIImage(data: data) {
+//                    DispatchQueue.main.async {
+//                        self?.image = image
+//                    }
+//                }
+//            }
+//        }
+//    }
+//}
