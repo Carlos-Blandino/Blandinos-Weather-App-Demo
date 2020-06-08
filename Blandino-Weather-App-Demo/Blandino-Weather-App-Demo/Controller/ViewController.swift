@@ -25,6 +25,7 @@ class ViewController: UIViewController, UITextFieldDelegate, WeatherManagerDeleg
     override func viewDidLoad() {
         super.viewDidLoad()
         whiteBackgroundView.layer.cornerRadius = 15
+        
         weatherManager.delegate = self
         // Do any additional setup after loading the view.
         
@@ -33,10 +34,7 @@ class ViewController: UIViewController, UITextFieldDelegate, WeatherManagerDeleg
     }
     
     @IBAction func locationSearchButtonTapped(_ sender: UIButton) {
-        
         searchTextField.endEditing(true)
-        
-        print("search button pressed")
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -79,25 +77,22 @@ class ViewController: UIViewController, UITextFieldDelegate, WeatherManagerDeleg
     }
     // background operation
     func didUpdateWeather(_ weatherManager: WeatherManager, weather: WeatherModel) {
-        print( weather.nameOfCity)
-        print(weather.tempStr)
+        //waiting for data
+        DispatchQueue.main.async {
+            
+            self.locationLabel.text = weather.nameOfCity
+            self.tempLabel.text = weather.tempStr
+            
+            //seting up and utilizing images from the openweather.org
+            
+            let url = URL(string: weather.imageOfCondition)!
+            let data = try? Data(contentsOf: url)
+            let image = UIImage(data: data!)
+            self.weatherImage.image = image
+        }
+  
     } 
       
-    
-    
-    
 }
 
-//extension UIImageView {
-//    func load(url: URL) {
-//        DispatchQueue.global().async { [weak self] in
-//            if let data = try? Data(contentsOf: url) {
-//                if let image = UIImage(data: data) {
-//                    DispatchQueue.main.async {
-//                        self?.image = image
-//                    }
-//                }
-//            }
-//        }
-//    }
-//}
+

@@ -9,6 +9,7 @@ import UIKit
 
 protocol WeatherManagerDelegate {
     func didUpdateWeather(_ weatherManager: WeatherManager , weather: WeatherModel)
+    
 }
 
 struct WeatherManager {
@@ -46,8 +47,13 @@ struct WeatherManager {
                     return
                 }
                 if let safeData = data {
-                   let weather = self.parseJSON(data: safeData)
-                    self.delegate?.didUpdateWeather(self, weather: weather!)
+                    let weather = self.parseJSON(safeData)
+                    
+                    if let theWeather = weather {
+                        self.delegate?.didUpdateWeather(self, weather: theWeather)
+                    } else {
+                        return
+                    }
                 }
             }
             // start task
@@ -58,7 +64,7 @@ struct WeatherManager {
         
     }
     
-    func parseJSON(data: Data) -> WeatherModel? {
+    func parseJSON(_ data: Data) -> WeatherModel? {
         let decoder = JSONDecoder()
         do {
             
@@ -72,7 +78,6 @@ struct WeatherManager {
             return weather
             
         } catch {
-            
             print(error)
             return nil
         }
