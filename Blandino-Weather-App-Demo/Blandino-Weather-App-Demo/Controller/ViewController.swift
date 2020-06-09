@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import CoreLocation
 
-class ViewController: UIViewController, UITextFieldDelegate, WeatherManagerDelegate {
+class ViewController: UIViewController, UITextFieldDelegate, WeatherManagerDelegate, CLLocationManagerDelegate {
   
     @IBOutlet weak var backgroundView: UIImageView!
     @IBOutlet weak var weatherImage: UIImageView!
@@ -18,13 +19,19 @@ class ViewController: UIViewController, UITextFieldDelegate, WeatherManagerDeleg
     @IBOutlet weak var searchTextField: UITextField!
     @IBOutlet weak var whiteBackgroundView: UIView!
     var weatherManager = WeatherManager()
+    let locationManager = CLLocationManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        whiteBackgroundView.layer.cornerRadius = 15
+     
         
+        whiteBackgroundView.layer.cornerRadius = 15
+        weatherImage.layer.cornerRadius = 15
         weatherManager.delegate = self
-        // Do any additional setup after loading the view.
+     
+        locationManager.delegate = self
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.requestLocation()
         
         searchTextField.delegate = self
         
@@ -34,9 +41,23 @@ class ViewController: UIViewController, UITextFieldDelegate, WeatherManagerDeleg
     }
     
     @IBAction func locationButtonTapped(_ sender: UIButton) {
-        
+        locationManager.requestLocation()
     
     }
+//MARK: - CLLocation Manager
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if let location = locations.last {
+            let latitude = location.coordinate.latitude
+            let longitude = location.coordinate.longitude
+            weatherManager.getWeather(latitude: latitude, longitude: longitude)
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print(error)
+    }
+    
 //MARK: - UITextFieldDelegate
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

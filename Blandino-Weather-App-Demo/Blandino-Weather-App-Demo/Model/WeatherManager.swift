@@ -6,6 +6,7 @@
 //  Copyright © 2020 Carlos Blandino. All rights reserved.
 //
 import UIKit
+import CoreLocation
 
 protocol WeatherManagerDelegate {
     func didUpdateWeather(_ weatherManager: WeatherManager , weather: WeatherModel)
@@ -15,12 +16,16 @@ protocol WeatherManagerDelegate {
 struct WeatherManager {
     //make to use https and not http, App Transport Security policy requires the use
     //of a secure connection
-    let url = "https://api.openweathermap.org/data/2.5/weather?appid=123fa8b368bed69d605b5d9bb748800e&units=imperial&q="
+    let url = "https://api.openweathermap.org/data/2.5/weather?appid=123fa8b368bed69d605b5d9bb748800e&units=imperial"
     
     var delegate: WeatherManagerDelegate?
     
     func getWeather(cityName: String) {
-        let weatherUrl = "\(url)\(cityName)"
+        let weatherUrl = "\(url)&q=\(cityName)"
+        performRequest(with: weatherUrl)
+    }
+    func getWeather(latitude: CLLocationDegrees, longitude: CLLocationDegrees) {
+        let weatherUrl = "\(url)&lat=\(latitude)&lon=\(longitude)"
         performRequest(with: weatherUrl)
     }
     
