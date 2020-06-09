@@ -23,7 +23,6 @@ class ViewController: UIViewController, UITextFieldDelegate, WeatherManagerDeleg
     
     override func viewDidLoad() {
         super.viewDidLoad()
-     
         
         whiteBackgroundView.layer.cornerRadius = 15
         weatherImage.layer.cornerRadius = 15
@@ -48,6 +47,8 @@ class ViewController: UIViewController, UITextFieldDelegate, WeatherManagerDeleg
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.last {
+            //needed to enable a fresh call to requestLocation() since its already been called
+            locationManager.stopUpdatingLocation()
             let latitude = location.coordinate.latitude
             let longitude = location.coordinate.longitude
             weatherManager.getWeather(latitude: latitude, longitude: longitude)
